@@ -142,8 +142,8 @@ impl<'a, C: conv::Conversation> Client<'a, C> {
         self.initialize_environment()
     }
 
-    // Initialize the client environment with common variables.
-    // Currently always called from Client.open_session()
+    /// Initialize the client environment with common variables.
+    /// Currently always called from Client.open_session()
     fn initialize_environment(&mut self) -> PamResult<()> {
         use users::os::unix::UserExt;
 
@@ -175,8 +175,8 @@ impl<'a, C: conv::Conversation> Client<'a, C> {
         Ok(())
     }
 
-    // Utility function to set an environment variable in PAM and the process
-    fn set_env(&mut self, key: &str, value: &str) -> PamResult<()> {
+    /// Utility function to set an environment variable in PAM and the process
+    pub fn set_env(&mut self, key: &str, value: &str) -> PamResult<()> {
         // Set regular environment variable
         env::set_var(key, value);
 
@@ -189,7 +189,7 @@ impl<'a, C: conv::Conversation> Client<'a, C> {
         }
     }
 
-    // Utility function to reset the pam handle in case of intermediate errors
+    /// Utility function to reset the pam handle in case of intermediate errors
     fn reset(&mut self) -> PamResult<()> {
         setcred(self.handle, PamFlag::Delete_Cred);
         self.is_authenticated = false;
